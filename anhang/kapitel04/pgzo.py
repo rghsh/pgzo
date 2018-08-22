@@ -111,7 +111,8 @@ def _call_base_and_sub_op(a, basecls, op_name, **kwargs):
         op = getattr(a, op_name, None)
         description = "object function"
         if op is not None:
-            if not op.__qualname__.endswith("<locals>." + op_name):
+            is_bound = hasattr(op, "__self__")
+            if is_bound:
                 # This is not an object function, but a class method
                 op = None
     elif issubclass(type(a), basecls):
